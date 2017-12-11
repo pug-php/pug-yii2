@@ -5,6 +5,9 @@
  */
 
 $baseDir = realpath(__DIR__ . '/..');
+include_once $baseDir . '/filters/EscapedFilter.php';
+
+$renderer = class_exists('Tale\\Pug\\Renderer') ? 'Tale\\Pug\\Renderer' : 'Pug\\Pug';
 
 return [
     'id' => 'testapp',
@@ -17,9 +20,10 @@ return [
         'view' => [
             'renderers' => [
                 'pug' => [
-                    'class' => 'rmrevin\\yii\\pug\\ViewRenderer',
+                    'class' => 'Pug\\Yii\\ViewRenderer',
+                    'renderer' => $renderer,
                     'filters' => [
-                        'escaped' => 'rmrevin\\yii\\pug\\tests\\unit\\filters\\EscapedFilter'
+                        'escaped' => 'Pug\\Yii\\Tests\\Filters\\EscapedFilter',
                     ],
                 ],
             ],

@@ -5,17 +5,15 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\pug\tests\unit\renderer;
+namespace Pug\Yii\Tests\Renderer;
 
 use yii\helpers\FileHelper;
 
 /**
  * Class MainTest
- * @package rmrevin\yii\pug\tests\unit\renderer
  */
-class MainTest extends \rmrevin\yii\pug\tests\unit\TestCase
+class MainTest extends \Pug\Yii\Tests\TestCase
 {
-
     public function tearDown()
     {
         parent::tearDown();
@@ -31,7 +29,7 @@ class MainTest extends \rmrevin\yii\pug\tests\unit\TestCase
 
         $result = $view->renderFile('@app/views/main.pug');
 
-        $this->assertEquals($result, '<div class="test-block"><p>Hello world</p><p>This is a test</p></div>');
+        self::assertSame('<div class="test-block"><p>Hello world</p><p>This is a test.</p></div>', $result);
 
         $this->checkAndRemoveCachePath(1);
     }
@@ -42,7 +40,7 @@ class MainTest extends \rmrevin\yii\pug\tests\unit\TestCase
 
         $result = $view->renderFile('@app/views/extend.pug');
 
-        $this->assertEquals($result, '<div class="test-block"><p>Hello world</p><p>This is a test</p><p>this is additional</p></div>');
+        self::assertSame('<div class="test-block"><p>Hello world</p><p>This is a test.</p><p>this is additional</p></div>', $result);
 
         $this->checkAndRemoveCachePath(1);
     }
@@ -50,24 +48,18 @@ class MainTest extends \rmrevin\yii\pug\tests\unit\TestCase
     public function testFilters()
     {
         $view = $this->getView();
-        $Pug = $this->getPugRenderer();
+        $pug = $this->getPugRenderer();
 
-        $Pug->addFilter('strip_tags', function ($node, $compiler) {
-            $output = [];
-
-            foreach ($node->block->nodes as $line) {
-                $output[] = $compiler->interpolate($line->value);
-            }
-
-            return strip_tags(implode("\n", $output));
+        $pug->addFilter('strip_tags', function ($code) {
+            return strip_tags($code);
         });
 
         $result = $view->renderFile('@app/views/filters.pug');
 
-        // print_r($result);
-        // die();
-
-        $this->assertEquals($result, "<style type=\"text/css\">p { font-size: 1rem; color: black; }\n\n</style><div>html string\n</div><div>&lt;p&gt;html string&lt;/p&gt;</div>");
+        self::assertSame(
+            "<style type=\"text/css\">p { font-size: 1rem; color: black; }</style><div>html string</div><div>&lt;p&gt;html string&lt;/p&gt;</div>",
+            str_replace(["\n", "\r"], '', $result)
+        );
 
         $this->checkAndRemoveCachePath(1);
     }
@@ -75,17 +67,19 @@ class MainTest extends \rmrevin\yii\pug\tests\unit\TestCase
     protected function checkAndRemoveCachePath($count)
     {
         $cachePath = $this->getCachePath();
-        $files = FileHelper::findFiles($cachePath);
+        $files = array_filter(FileHelper::findFiles($cachePath), function ($file) {
+            return !preg_match('/\.imports\.serialize\.txt$/', $file);
+        });
 
-        $this->assertEquals(count($files), $count);
+        self::assertCount($count, $files);
 
         FileHelper::removeDirectory($cachePath);
     }
 
     protected function getCachePath()
     {
-        $Pug = $this->getPugRenderer();
+        $pug = $this->getPugRenderer();
 
-        return \Yii::getAlias($Pug->cachePath);
+        return \Yii::getAlias($pug->cachePath);
     }
 }

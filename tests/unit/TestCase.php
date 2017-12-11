@@ -5,18 +5,16 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\pug\tests\unit;
+namespace Pug\Yii\Tests;
 
 use yii\helpers\ArrayHelper;
 
 /**
  * Class TestCase
- * @package rmrevin\yii\pug\tests\unit
  * This is the base class for all yii framework unit tests.
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-
     public static $params;
 
     protected function setUp()

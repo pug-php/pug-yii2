@@ -5,7 +5,7 @@
  * @link https://rmrevin.com
  */
 
-namespace rmrevin\yii\pug;
+namespace Pug\Yii;
 
 use Pug\Pug;
 use Yii;
@@ -18,12 +18,12 @@ use yii\helpers\FileHelper;
  */
 class ViewRenderer extends \yii\base\ViewRenderer
 {
-
     /**
      * @var string the directory or path alias pointing to where Pug cache will be stored. Set to false to disable
      * templates cache.
      */
     public $cachePath = '@runtime/pug/cache';
+
     /**
      * @var array Pug options.
      * @see https://github.com/pug-php/pug
@@ -33,6 +33,7 @@ class ViewRenderer extends \yii\base\ViewRenderer
         'extension' => '.pug',
         'upToDateCheck' => true,
     ];
+
     /**
      * @var array Custom filters.
      * Keys of the array are names to call in template, values are names of functions or static methods of some class.
@@ -40,6 +41,12 @@ class ViewRenderer extends \yii\base\ViewRenderer
      * In the template you can use it like this: `{{ 'test'|rot13 }}` or `{{ model|jsonEncode }}`.
      */
     public $filters = [];
+
+    /**
+     * @var string pug renderer class name
+     */
+    public $renderer;
+
     /**
      * @var Pug pug environment object that renders pug templates
      */
@@ -54,20 +61,25 @@ class ViewRenderer extends \yii\base\ViewRenderer
         }
 
         if (!empty($cachePath) && !is_readable($cachePath)) {
-            throw new Exception(\Yii::t('app', 'Pug cache path is not readable.'));
+            throw new Exception(Yii::t('app', 'Pug cache path is not readable.'));
         }
 
         if (!empty($cachePath) && !is_writeable($cachePath)) {
-            throw new Exception(\Yii::t('app', 'Pug cache path is not writable.'));
+            throw new Exception(Yii::t('app', 'Pug cache path is not writable.'));
         }
 
-        $this->pug = new Pug(array_merge([
-            'cache' => $cachePath,
+        $className = empty($this->renderer) ? 'Pug\\Pug' : $this->renderer;
+        $this->pug = new $className(array_merge([
+            'cache'     => $cachePath,
+            'cache_dir' => $cachePath,
         ], $this->options));
 
         // Adding custom filters
         if (!empty($this->filters)) {
             foreach ($this->filters as $name => $handler) {
+                if (is_string($handler) && !is_callable($handler)) {
+                    $handler = new $handler();
+                }
                 $this->addFilter($name, $handler);
             }
         }
@@ -87,7 +99,11 @@ class ViewRenderer extends \yii\base\ViewRenderer
      */
     public function render($view, $file, $params)
     {
-        return $this->pug->render($file, $params);
+        $method = method_exists($this->pug, 'renderFile')
+            ? [$this->pug, 'renderFile']
+            : [$this->pug, 'render'];
+
+        return call_user_func($method, $file, $params);
     }
 
     /**

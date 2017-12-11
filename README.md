@@ -1,27 +1,18 @@
 Yii 2 Pug (ex Jade) extension
 ===============================
 
+Forked from https://github.com/pug/yii2
+
 This extension provides a view renderer for [Pug](https://pugjs.org/) templates
 for [Yii framework 2.0](http://www.yiiframework.com/) applications.
 
-For license information check the [LICENSE](https://github.com/rmrevin/yii2-pug/blob/master/LICENSE)-file.
-
-[![License](https://poser.pugx.org/rmrevin/yii2-pug/license.svg)](https://packagist.org/packages/rmrevin/yii2-pug)
-[![Latest Stable Version](https://poser.pugx.org/rmrevin/yii2-pug/v/stable.svg)](https://packagist.org/packages/rmrevin/yii2-pug)
-[![Latest Unstable Version](https://poser.pugx.org/rmrevin/yii2-pug/v/unstable.svg)](https://packagist.org/packages/rmrevin/yii2-pug)
-[![Total Downloads](https://poser.pugx.org/rmrevin/yii2-pug/downloads.svg)](https://packagist.org/packages/rmrevin/yii2-pug)
-
-Code Status
------------
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rmrevin/yii2-pug/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rmrevin/yii2-pug/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/rmrevin/yii2-pug/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/rmrevin/yii2-pug/?branch=master)
-[![Travis CI Build Status](https://travis-ci.org/rmrevin/yii2-pug.svg)](https://travis-ci.org/rmrevin/yii2-pug)
-[![Dependency Status](https://www.versioneye.com/user/projects/54119b799e16229fe00000da/badge.svg)](https://www.versioneye.com/user/projects/54119b799e16229fe00000da)
+[![License](https://poser.pugx.org/pug/yii2/license.svg)](https://packagist.org/packages/pug/yii2)
+[![Latest Stable Version](https://poser.pugx.org/pug/yii2/v/stable.svg)](https://packagist.org/packages/pug/yii2)
+[![Travis CI Build Status](https://travis-ci.org/pug-php/pug-yii2.svg)](https://travis-ci.org/pug-php/pug-yii2)
 
 Support
 -------
-* [GutHub issues](https://github.com/rmrevin/yii2-pug/issues)
-* [Public chat](https://gitter.im/rmrevin/support)
+* [GutHub issues](https://github.com/pug-php/pug-yii2/issues)
 
 Installation
 ------------
@@ -31,13 +22,13 @@ The preferred way to install this extension is through [composer](https://getcom
 Either run
 
 ```bash
-composer require "rmrevin/yii2-pug:~0.0"
+composer require pug/yii2
 ```
 
 or add
 
 ```
-"rmrevin/yii2-pug": "~0.0",
+"pug/yii2": "^1.0",
 ```
 
 to the `require` section of your `composer.json` file.
@@ -54,11 +45,41 @@ return [
 		'view' => [
 		    // ...
             'renderers' => [
-            	'pug' => 'rmrevin\\yii\\pug\\ViewRenderer',
+            	'pug' => 'Pug\\Yii\\ViewRenderer',
             ],
-		]
-	]
+		],
+	],
 ];
 ```
+
+You can also use other pug renderer like
+[phug](https://www.phug-lang.com) or
+[tale-pug](https://github.com/Talesoft/tale-pug)
+```php
+<?php
+
+return [
+	// ...
+	'components' => [
+		// ...
+		'view' => [
+		    // ...
+            'renderers' => [
+            	'pug' => [
+                     'class' => 'Pug\\Yii\\ViewRenderer',
+                     'renderer' => 'Phug\\Renderer',
+                 ],
+            ],
+		],
+	],
+];
+```
+Phug and Pug-php (the default renderer) are automatically installed
+when you install the last version of `pug/yii2`, for other pug renderer,
+replace the renderer class and include it.
+
+For example, for Tale-pug, use `composer require talesoft/tale-pug`
+then replace `'Tale\\Pug\\Renderer'` with `'Tale\\Pug\\Renderer'`
+in the config example above.
 
 That's all! Now you can use pug templates.

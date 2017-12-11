@@ -5,11 +5,10 @@
  * @link https://rmrevin.com
  */
 
-namespace rmrevin\yii\pug;
+namespace Pug\Yii;
 
 /**
  * Class Exception
- * @package rmrevin\yii\pug
  */
 class Exception extends \yii\base\Exception
 {
