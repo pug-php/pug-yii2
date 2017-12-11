@@ -47,6 +47,10 @@ class MainTest extends \Pug\Yii\Tests\TestCase
 
     public function testFilters()
     {
+        if (UES_TALE) {
+            self::markTestSkipped('Skip filters tests for Tale-pug');
+        }
+
         $view = $this->getView();
         $pug = $this->getPugRenderer();
 

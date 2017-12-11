@@ -5,9 +5,15 @@
  */
 
 $baseDir = realpath(__DIR__ . '/..');
-include_once $baseDir . '/filters/EscapedFilter.php';
-
-$renderer = class_exists('Tale\\Pug\\Renderer') ? 'Tale\\Pug\\Renderer' : 'Pug\\Pug';
+define('UES_TALE', class_exists('Tale\\Pug\\Renderer'));
+$renderer = UES_TALE ? 'Tale\\Pug\\Renderer' : 'Pug\\Pug';
+$filters = [];
+if (!UES_TALE) {
+    include_once $baseDir . '/filters/EscapedFilter.php';
+    $filters = [
+        'escaped' => 'Pug\\Yii\\Tests\\Filters\\EscapedFilter',
+    ];
+}
 
 return [
     'id' => 'testapp',
@@ -22,9 +28,7 @@ return [
                 'pug' => [
                     'class' => 'Pug\\Yii\\ViewRenderer',
                     'renderer' => $renderer,
-                    'filters' => [
-                        'escaped' => 'Pug\\Yii\\Tests\\Filters\\EscapedFilter',
-                    ],
+                    'filters' => $filters,
                 ],
             ],
         ],
