@@ -4,7 +4,7 @@ matrix:
   include:
     - php: 5.4
       env: RENDERER='pug-php/pug:^2.7'
-    - php: 5.4
+    - php: 5.5
       env: RENDERER='talesoft/tale-pug:^1.5'
     - php: 5.5
       env: RENDERER='pug-php/pug:^2.7'
@@ -47,6 +47,7 @@ cache:
 
 install:
   - travis_retry composer self-update && composer --version
+  - travis_retry composer remove pug-php/pug --no-update
   - travis_retry composer require "${RENDERER}" --no-update
   - travis_retry composer install --prefer-dist --no-interaction
 

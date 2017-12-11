@@ -60,6 +60,7 @@ class ViewRenderer extends \yii\base\ViewRenderer
             FileHelper::createDirectory($cachePath);
         }
 
+        // @codeCoverageIgnoreStart
         if (!empty($cachePath) && !is_readable($cachePath)) {
             throw new Exception(Yii::t('app', 'Pug cache path is not readable.'));
         }
@@ -67,6 +68,7 @@ class ViewRenderer extends \yii\base\ViewRenderer
         if (!empty($cachePath) && !is_writeable($cachePath)) {
             throw new Exception(Yii::t('app', 'Pug cache path is not writable.'));
         }
+        // @codeCoverageIgnoreEnd
 
         $className = empty($this->renderer) ? 'Pug\\Pug' : $this->renderer;
         $this->pug = new $className(array_merge([
