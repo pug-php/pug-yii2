@@ -47,12 +47,12 @@ cache:
 
 install:
   - travis_retry composer self-update && composer --version
-  - travis_retry composer global require "fxp/composer-asset-plugin:~1.1"
+  - travis_retry composer global require "fxp/composer-asset-plugin:^1.4"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer remove pug-php/pug --no-update
   - travis_retry composer require "${RENDERER}" --no-update
   - echo "$(cat composer.json)"
-  - travis_retry composer update --no-interaction --prefer-stable
+  - travis_retry composer install --prefer-dist --no-interaction --prefer-stable
 
 script:
   - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
