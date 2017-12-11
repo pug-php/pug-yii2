@@ -50,8 +50,18 @@ class MainTest extends \Pug\Yii\Tests\TestCase
         $view = $this->getView();
         $pug = $this->getPugRenderer();
 
-        $pug->addFilter('strip_tags', function ($code) {
-            return strip_tags($code);
+        $pug->addFilter('strip_tags', function ($node, $compiler) {
+            if (is_string($node)) {
+                return strip_tags($node);
+            }
+
+            $output = [];
+
+            foreach ($node->block->nodes as $line) {
+                $output[] = $compiler->interpolate($line->value);
+            }
+
+            return strip_tags(implode("\n", $output));
         });
 
         $result = $view->renderFile('@app/views/filters.pug');
