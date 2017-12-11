@@ -71,9 +71,13 @@ class ViewRenderer extends \yii\base\ViewRenderer
         // @codeCoverageIgnoreEnd
 
         $className = empty($this->renderer) ? 'Pug\\Pug' : $this->renderer;
+        $baseDir = realpath(Yii::getAlias('@app/views'));
         $this->pug = new $className(array_merge([
-            'cache'     => $cachePath,
-            'cache_dir' => $cachePath,
+            'cache'      => $cachePath, // pug-php 2
+            'cache_dir'  => $cachePath, // phug / pug-php 3
+            'cache_path' => $cachePath, // tale-pug
+            'basedir'    => $baseDir,   // pug-php 2
+            'paths'      => [$baseDir], // phug / pug-php 3
         ], $this->options));
 
         // Adding custom filters
@@ -104,6 +108,17 @@ class ViewRenderer extends \yii\base\ViewRenderer
         $method = method_exists($this->pug, 'renderFile')
             ? [$this->pug, 'renderFile']
             : [$this->pug, 'render'];
+        // @codeCoverageIgnoreStart
+        if ($this->pug instanceof \Tale\Pug\Renderer && !($this->pug instanceof \Phug\Renderer)) {
+            $this->pug->compile(''); // Init ->files
+            $path = realpath(Yii::getAlias('@app/views'));
+            $pieces = explode($path, realpath($file), 2);
+            if (count($pieces) === 2) {
+                $file = ltrim($pieces[1], '\\/');
+            }
+        }
+        // @codeCoverageIgnoreEnd
+        file_put_contents('temp.php', $this->pug->compileFile($file));
 
         return call_user_func($method, $file, $params);
     }

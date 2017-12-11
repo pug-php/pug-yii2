@@ -49,7 +49,6 @@ cache:
 
 install:
   - travis_retry composer self-update && composer --version
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer remove pug-php/pug --no-update
   - travis_retry composer require "${RENDERER}" --no-update
   - echo "$(cat composer.json)"
