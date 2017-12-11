@@ -1,8 +1,6 @@
 Yii 2 Pug (ex Jade) extension
 ===============================
 
-Forked from https://github.com/pug/yii2
-
 This extension provides a view renderer for [Pug](https://pugjs.org/) templates
 for [Yii framework 2.0](http://www.yiiframework.com/) applications.
 
@@ -10,9 +8,11 @@ for [Yii framework 2.0](http://www.yiiframework.com/) applications.
 [![Latest Stable Version](https://poser.pugx.org/pug/yii2/v/stable.svg)](https://packagist.org/packages/pug/yii2)
 [![Travis CI Build Status](https://travis-ci.org/pug-php/pug-yii2.svg)](https://travis-ci.org/pug-php/pug-yii2)
 
+
 Support
 -------
 * [GutHub issues](https://github.com/pug-php/pug-yii2/issues)
+
 
 Installation
 ------------
@@ -32,6 +32,7 @@ or add
 ```
 
 to the `require` section of your `composer.json` file.
+
 
 Configure
 ---------
@@ -83,3 +84,15 @@ then replace `'Tale\\Pug\\Renderer'` with `'Tale\\Pug\\Renderer'`
 in the config example above.
 
 That's all! Now you can use pug templates.
+
+
+Credits
+-------
+
+This solution merge both project
+[rmrevin/yii2-pug](https://github.com/rmrevin/yii2-pug)
+(original fork that support pug-php 2) and
+[jacmoe/yii2-tale-pug](https://github.com/jacmoe/yii2-tale-pug)
+(tale-pug/tale-jade Yii2 solution)
+and finally bring support for pug-php 3 and phug engines.
+ 
