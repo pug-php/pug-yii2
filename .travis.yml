@@ -52,7 +52,7 @@ install:
   - travis_retry composer remove pug-php/pug --no-update
   - travis_retry composer require "${RENDERER}" --no-update
   - echo "$(cat composer.json)"
-  - travis_retry composer install --prefer-dist --no-interaction --prefer-stable
+  - travis_retry composer install --prefer-dist --no-interaction
 
 script:
   - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
