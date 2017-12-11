@@ -118,7 +118,6 @@ class ViewRenderer extends \yii\base\ViewRenderer
             }
         }
         // @codeCoverageIgnoreEnd
-        file_put_contents('temp.php', $this->pug->compileFile($file));
 
         return call_user_func($method, $file, $params);
     }
