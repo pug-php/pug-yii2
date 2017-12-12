@@ -27,6 +27,10 @@
       "homepage": "https://www.phug-lang.com/"
     }
   ],
+  "replace": {
+    "rmrevin/yii2-pug": "0.0.1",
+    "jacmoe/yii2-pug": "1.5.5"
+  },
   "require": {
     "php": ">=5.4.0",
     "yiisoft/yii2": "^2.0",
