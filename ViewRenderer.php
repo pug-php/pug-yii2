@@ -25,6 +25,7 @@ class ViewRenderer extends YiiViewRenderer
      *             templates cache.
      */
     public $cachePath = '@runtime/pug/cache';
+    public $viewPath = '@app/views';
 
     /**
      * @var array Pug options.
@@ -107,7 +108,7 @@ class ViewRenderer extends YiiViewRenderer
         // @codeCoverageIgnoreEnd
 
         $className = empty($this->renderer) ? 'Pug\\Pug' : $this->renderer;
-        $baseDir = realpath(Yii::getAlias('@app/views'));
+        $baseDir = realpath(Yii::getAlias($this->viewPath));
         $this->pug = new $className(array_merge([
             'cache'      => $cachePath, // pug-php 2
             'cache_dir'  => $cachePath, // phug / pug-php 3
@@ -139,7 +140,7 @@ class ViewRenderer extends YiiViewRenderer
         // @codeCoverageIgnoreStart
         if ($this->pug instanceof \Tale\Pug\Renderer && !($this->pug instanceof \Phug\Renderer)) {
             $this->pug->compile(''); // Init ->files
-            $path = realpath(Yii::getAlias('@app/views'));
+            $path = realpath(Yii::getAlias($this->viewPath));
             $pieces = explode($path, realpath($file), 2);
             if (count($pieces) === 2) {
                 $file = ltrim($pieces[1], '\\/');
@@ -147,7 +148,7 @@ class ViewRenderer extends YiiViewRenderer
         }
         // @codeCoverageIgnoreEnd
 
-        return call_user_func($method, $file, $params);
+        return call_user_func($method, $file, $params + ['app' => Yii::$app, 'view' => $view]);
     }
 
     /**
