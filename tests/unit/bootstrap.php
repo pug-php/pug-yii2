@@ -9,7 +9,6 @@
  *
  * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/bootstrap.php
  */
-
 define('YII_ENABLE_ERROR_HANDLER', true);
 define('YII_DEBUG', true);
 $_SERVER['SCRIPT_NAME'] = '/' . __DIR__;

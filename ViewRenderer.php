@@ -63,9 +63,6 @@ class ViewRenderer extends YiiViewRenderer
     {
         if (!empty($this->filters)) {
             foreach ($this->filters as $name => $handler) {
-                if (is_string($handler) && !is_callable($handler)) {
-                    $handler = new $handler();
-                }
                 $this->addFilter($name, $handler);
             }
         }
@@ -161,6 +158,10 @@ class ViewRenderer extends YiiViewRenderer
      */
     public function addFilter($name, $handler)
     {
+        if (is_string($handler) && !is_callable($handler)) {
+            $handler = new $handler();
+        }
+
         $this->pug->filter($name, $handler);
     }
 }
