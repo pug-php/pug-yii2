@@ -85,6 +85,30 @@ For example, for Tale-pug, use `composer require talesoft/tale-pug`
 then replace `'Tale\\Pug\\Renderer'` with `'Tale\\Pug\\Renderer'`
 in the config example above.
 
+### Cache path and View path
+By default, this extension uses `'@runtime/pug/cache'` to store compiled templates, and looks in `'@app/views'` to find the templates to compile.
+
+You can change this, by specifying `cachePath` and/or `viewPath` in the configuration, for example:
+
+```
+return [
+  // ...
+  'components' => [
+    // ...
+    'view' => [
+      // ...
+      'renderers' => [
+        'pug' => [
+          'class' => 'Pug\\Yii\\ViewRenderer',
+          'cachePath' => '@app/runtime/Pugcache',
+          'viewPath' => '@app/themes/dark/templates/views',
+        ],
+      ],
+    ],
+  ],
+];
+```
+
 That's all! Now you can use pug templates.
 
 
