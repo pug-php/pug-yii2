@@ -1,8 +1,9 @@
 <?php
+
 /**
- * View.php
- * @author Revin Roman
- * @link https://rmrevin.com
+ * Credits: https://github.com/pug-php/pug-yii2#credits
+ * Forked from:
+ * @link https://github.com/rmrevin/yii2-pug/blob/master/ViewRenderer.php
  */
 
 namespace Pug\Yii;
@@ -10,35 +11,37 @@ namespace Pug\Yii;
 use Pug\Pug;
 use Yii;
 use yii\base\View;
+use yii\base\ViewRenderer as YiiViewRenderer;
 use yii\helpers\FileHelper;
 
 /**
- * Class ViewRenderer
- * @package rmrevin\yii\pug
+ * Class ViewRenderer handle pug templates.
  */
-class ViewRenderer extends \yii\base\ViewRenderer
+class ViewRenderer extends YiiViewRenderer
 {
     /**
      * @var string the directory or path alias pointing to where Pug cache will be stored. Set to false to disable
-     * templates cache.
+     *             templates cache.
      */
     public $cachePath = '@runtime/pug/cache';
 
     /**
      * @var array Pug options.
-     * @see https://github.com/pug-php/pug
+     *
+     * @see https://www.phug-lang.com/#options
      */
     public $options = [
-        'prettyprint' => false,
-        'extension' => '.pug',
+        'prettyprint'   => false,
+        'extension'     => '.pug',
         'upToDateCheck' => true,
     ];
 
     /**
      * @var array Custom filters.
-     * Keys of the array are names to call in template, values are names of functions or static methods of some class.
-     * Example: `['rot13' => 'str_rot13', 'jsonEncode' => '\yii\helpers\Json::encode']`.
-     * In the template you can use it like this: `{{ 'test'|rot13 }}` or `{{ model|jsonEncode }}`.
+     *            Keys of the array are names to call in template, values are names of functions or static methods
+     *            of some class.
+     *            Example: `['rot13' => 'str_rot13', 'jsonEncode' => '\yii\helpers\Json::encode']`.
+     *            In the template you can use it like this: `{{ 'test'|rot13 }}` or `{{ model|jsonEncode }}`.
      */
     public $filters = [];
 
@@ -52,7 +55,29 @@ class ViewRenderer extends \yii\base\ViewRenderer
      */
     public $pug;
 
-    public function init()
+    /**
+     * Add custom filters from ViewRenderer `filters` parameter.
+     */
+    protected function initFilters()
+    {
+        if (!empty($this->filters)) {
+            foreach ($this->filters as $name => $handler) {
+                if (is_string($handler) && !is_callable($handler)) {
+                    $handler = new $handler();
+                }
+                $this->addFilter($name, $handler);
+            }
+        }
+    }
+
+    /**
+     * Create if needed and return the cache path calculated from ViewRenderer `cachePath` parameter.
+     *
+     * @throws \yii\base\Exception
+     *
+     * @return bool|string
+     */
+    protected function initCachePath()
     {
         $cachePath = empty($this->cachePath) ? false : Yii::getAlias($this->cachePath);
 
@@ -60,12 +85,25 @@ class ViewRenderer extends \yii\base\ViewRenderer
             FileHelper::createDirectory($cachePath);
         }
 
+        return $cachePath;
+    }
+
+    /**
+     * Create the pug renderer engine.
+     *
+     * @throws Exception
+     * @throws \yii\base\Exception
+     */
+    public function init()
+    {
+        $cachePath = $this->initCachePath();
+
         // @codeCoverageIgnoreStart
         if (!empty($cachePath) && !is_readable($cachePath)) {
             throw new Exception(Yii::t('app', 'Pug cache path is not readable.'));
         }
 
-        if (!empty($cachePath) && !is_writeable($cachePath)) {
+        if (!empty($cachePath) && !is_writable($cachePath)) {
             throw new Exception(Yii::t('app', 'Pug cache path is not writable.'));
         }
         // @codeCoverageIgnoreEnd
@@ -80,15 +118,7 @@ class ViewRenderer extends \yii\base\ViewRenderer
             'paths'      => [$baseDir], // phug / pug-php 3
         ], $this->options));
 
-        // Adding custom filters
-        if (!empty($this->filters)) {
-            foreach ($this->filters as $name => $handler) {
-                if (is_string($handler) && !is_callable($handler)) {
-                    $handler = new $handler();
-                }
-                $this->addFilter($name, $handler);
-            }
-        }
+        $this->initFilters();
     }
 
     /**
@@ -97,9 +127,9 @@ class ViewRenderer extends \yii\base\ViewRenderer
      * This method is invoked by [[View]] whenever it tries to render a view.
      * Child classes must implement this method to render the given view file.
      *
-     * @param View $view the view object used for rendering the file.
-     * @param string $file the view file.
-     * @param array $params the parameters to be passed to the view file.
+     * @param View   $view   the view object used for rendering the file.
+     * @param string $file   the view file.
+     * @param array  $params the parameters to be passed to the view file.
      *
      * @return string the rendering result
      */
@@ -123,8 +153,9 @@ class ViewRenderer extends \yii\base\ViewRenderer
     }
 
     /**
-     * Adds custom filter
-     * @param string $name
+     * Adds custom filter.
+     *
+     * @param string   $name
      * @param callable $handler
      */
     public function addFilter($name, $handler)

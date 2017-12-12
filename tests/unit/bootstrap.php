@@ -1,8 +1,11 @@
 <?php
+
 /**
- * bootstrap.php
- * @author Revin Roman
- * @link https://rmrevin.ru
+ * PHPUnit bootstrap.
+ *
+ * Credits: https://github.com/pug-php/pug-yii2#credits
+ * Forked from:
+ * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/bootstrap.php
  */
 
 define('YII_ENABLE_ERROR_HANDLER', true);

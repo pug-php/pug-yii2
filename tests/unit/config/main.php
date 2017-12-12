@@ -1,7 +1,10 @@
 <?php
 /**
- * main.php
- * @author Roman Revin http://phptime.ru
+ * Config for unit tests.
+ *
+ * Credits: https://github.com/pug-php/pug-yii2#credits
+ * Forked from:
+ * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/config/main.php
  */
 
 $baseDir = realpath(__DIR__ . '/..');

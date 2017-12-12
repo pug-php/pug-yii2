@@ -40,16 +40,16 @@ Configure
 <?php
 
 return [
-	// ...
-	'components' => [
-		// ...
-		'view' => [
-		    // ...
-            'renderers' => [
-            	'pug' => 'Pug\\Yii\\ViewRenderer',
-            ],
-		],
-	],
+  // ...
+  'components' => [
+    // ...
+    'view' => [
+      // ...
+      'renderers' => [
+        'pug' => 'Pug\\Yii\\ViewRenderer',
+      ],
+    ],
+  ],
 ];
 ```
 
@@ -60,19 +60,19 @@ You can also use other pug renderer like
 <?php
 
 return [
-	// ...
-	'components' => [
-		// ...
-		'view' => [
-		    // ...
-            'renderers' => [
-            	'pug' => [
-                     'class' => 'Pug\\Yii\\ViewRenderer',
-                     'renderer' => 'Phug\\Renderer',
-                 ],
-            ],
-		],
-	],
+  // ...
+  'components' => [
+    // ...
+    'view' => [
+      // ...
+      'renderers' => [
+        'pug' => [
+          'class' => 'Pug\\Yii\\ViewRenderer',
+          'renderer' => 'Phug\\Renderer',
+        ],
+      ],
+    ],
+  ],
 ];
 ```
 Phug and Pug-php (the default renderer) are automatically installed
@@ -93,6 +93,6 @@ This solution merge both project
 [rmrevin/yii2-pug](https://github.com/rmrevin/yii2-pug)
 (original fork that support pug-php 2) and
 [jacmoe/yii2-tale-pug](https://github.com/jacmoe/yii2-tale-pug)
-(tale-pug/tale-jade Yii2 solution)
+(tale-pug and tale-jade Yii2 solution)
 and finally bring support for pug-php 3 and phug engines.
  

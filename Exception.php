@@ -1,15 +1,15 @@
 <?php
+
 /**
- * Exception.php
- * @author Revin Roman
- * @link https://rmrevin.com
+ * Pug Yii2 exception.
+ *
+ * Credits: https://github.com/pug-php/pug-yii2#credits
  */
 
 namespace Pug\Yii;
 
-/**
- * Class Exception
- */
-class Exception extends \yii\base\Exception
+use yii\base\Exception as YiiException;
+
+class Exception extends YiiException
 {
 }

@@ -1,17 +1,17 @@
 <?php
+
 /**
- * MainTest.php
- * @author Revin Roman
- * @link https://rmrevin.ru
+ * Class MainTest, main rendering tests.
+ *
+ * Credits: https://github.com/pug-php/pug-yii2#credits
+ * Forked from:
+ * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/renderer/MainTest.php
  */
 
 namespace Pug\Yii\Tests\Renderer;
 
 use yii\helpers\FileHelper;
 
-/**
- * Class MainTest
- */
 class MainTest extends \Pug\Yii\Tests\TestCase
 {
     public function tearDown()
@@ -71,7 +71,7 @@ class MainTest extends \Pug\Yii\Tests\TestCase
         $result = $view->renderFile('@app/views/filters.pug');
 
         self::assertSame(
-            "<style type=\"text/css\">p { font-size: 1rem; color: black; }</style><div>html string</div><div>&lt;p&gt;html string&lt;/p&gt;</div>",
+            '<style type="text/css">p { font-size: 1rem; color: black; }</style><div>html string</div><div>&lt;p&gt;html string&lt;/p&gt;</div>',
             str_replace(["\n", "\r"], '', $result)
         );
 
