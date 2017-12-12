@@ -4,7 +4,9 @@
  * Class TestCase base Yii2 Pug unit test case.
  *
  * Credits: https://github.com/pug-php/pug-yii2#credits
- * Forked from:
+ *
+ * Forked from rmrevin/yii2-pug:
+ *
  * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/TestCase.php
  */
 

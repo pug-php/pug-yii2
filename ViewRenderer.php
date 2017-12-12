@@ -1,8 +1,12 @@
 <?php
 
 /**
+ * Class ViewRenderer handle pug templates.
+ *
  * Credits: https://github.com/pug-php/pug-yii2#credits
- * Forked from:
+ *
+ * Forked from rmrevin/yii2-pug:
+ *
  * @link https://github.com/rmrevin/yii2-pug/blob/master/ViewRenderer.php
  */
 
@@ -14,9 +18,6 @@ use yii\base\View;
 use yii\base\ViewRenderer as YiiViewRenderer;
 use yii\helpers\FileHelper;
 
-/**
- * Class ViewRenderer handle pug templates.
- */
 class ViewRenderer extends YiiViewRenderer
 {
     /**

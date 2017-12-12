@@ -4,7 +4,9 @@
  * Class EscapedFilter, basic filter to escape HTML entities.
  *
  * Credits: https://github.com/pug-php/pug-yii2#credits
- * Forked from:
+ *
+ * Forked from rmrevin/yii2-pug:
+ *
  * @link https://github.com/rmrevin/yii2-pug/blob/master/tests/unit/filters/EscapedFilter.php
  */
 
