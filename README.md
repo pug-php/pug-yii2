@@ -69,7 +69,7 @@ return [
       // ...
       'renderers' => [
         'pug' => [
-          'class' => 'Pug\\Yii\\ViewRenderer',
+          'class'    => 'Pug\\Yii\\ViewRenderer',
           'renderer' => 'Phug\\Renderer',
         ],
       ],
@@ -86,9 +86,12 @@ then replace `'Tale\\Pug\\Renderer'` with `'Tale\\Pug\\Renderer'`
 in the config example above.
 
 ### Cache path and View path
-By default, this extension uses `'@runtime/pug/cache'` to store compiled templates, and looks in `'@app/views'` to find the templates to compile.
 
-You can change this, by specifying `cachePath` and/or `viewPath` in the configuration, for example:
+By default, this extension uses `'@runtime/pug/cache'` to store compiled
+templates, and looks in `'@app/views'` to find the templates to compile.
+
+You can change this, by specifying `cachePath` and/or `viewPath` in the
+configuration, for example:
 
 ```
 return [
@@ -99,9 +102,9 @@ return [
       // ...
       'renderers' => [
         'pug' => [
-          'class' => 'Pug\\Yii\\ViewRenderer',
+          'class'     => 'Pug\\Yii\\ViewRenderer',
           'cachePath' => '@app/runtime/Pugcache',
-          'viewPath' => '@app/themes/dark/templates/views',
+          'viewPath'  => '@app/themes/dark/templates/views',
         ],
       ],
     ],
@@ -109,8 +112,45 @@ return [
 ];
 ```
 
-That's all! Now you can use pug templates.
+`pug/yii` provide 2 global variables: `app` (`Yii::$app`) and `view` (view
+path given to `->render()` in your controller). It imply that:
+- If you set **app** or **view** shared variables, they will be erased by
+those system values.
+- If you pass **app** or **view** locals to the `->render()` method they
+will have the precedence on system values.
 
+To avoid such name conflict, you can pack into on object and store in a
+shared variable with a name you chose:
+```php
+return [
+  // ...
+  'components' => [
+    // ...
+    'view' => [
+      // ...
+      'renderers' => [
+        'pug' => [
+          'class'           => 'Pug\\Yii\\ViewRenderer',
+          // ...
+          'systemVariable'  => '_yii',
+        ],
+      ],
+    ],
+  ],
+];
+```
+With this config, **app** and **view** are no longer reserved names
+(can be used for your own locals or shared variables),
+only **_yii** is, and so you can get app and view like this:
+```pug
+h1=_yii.view.defaultExtension
+p=_yii.app.version
+```
+Or if you set the `expressionLanguage` option to `"php"`:
+```pug
+h1=$_yii->view->defaultExtension
+p=$_yii->app->getVersion()
+```
 
 Credits
 -------

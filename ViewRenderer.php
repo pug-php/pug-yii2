@@ -21,11 +21,21 @@ use yii\helpers\FileHelper;
 class ViewRenderer extends YiiViewRenderer
 {
     /**
-     * @var string the directory or path alias pointing to where Pug cache will be stored. Set to false to disable
-     *             templates cache.
+     * @var string|false the directory or path alias pointing to where Pug cache will be stored. Set to false to
+     *                   disable templates cache.
      */
     public $cachePath = '@runtime/pug/cache';
+
+    /**
+     * @var string the directory or path alias pointing to where Pug templates are located.
+     */
     public $viewPath = '@app/views';
+
+    /**
+     * @var string|null variable name for system data like $app and $view, let null to get those data as locals
+     *                  without namespace.
+     */
+    public $systemVariable = null;
 
     /**
      * @var array Pug options.
@@ -148,7 +158,17 @@ class ViewRenderer extends YiiViewRenderer
         }
         // @codeCoverageIgnoreEnd
 
-        return call_user_func($method, $file, $params + ['app' => Yii::$app, 'view' => $view]);
+        $systemVariables = [
+            'app'  => Yii::$app,
+            'view' => $view,
+        ];
+        if ($this->systemVariable) {
+            $systemVariables = [
+                $this->systemVariable => (object) $systemVariables,
+            ];
+        }
+
+        return call_user_func($method, $file, array_merge($systemVariables, $params));
     }
 
     /**

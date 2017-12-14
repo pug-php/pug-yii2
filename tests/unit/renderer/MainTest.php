@@ -36,6 +36,18 @@ class MainTest extends \Pug\Yii\Tests\TestCase
         $this->checkAndRemoveCachePath(1);
     }
 
+    public function testSystemVariable()
+    {
+        $view = $this->getView();
+        $this->getPugRenderer()->systemVariable = 'system';
+
+        $result = $view->renderFile('@app/views/sys-vars.pug');
+
+        self::assertSame('<p>php</p>', $result);
+
+        $this->checkAndRemoveCachePath(1);
+    }
+
     public function testExtends()
     {
         $view = $this->getView();
