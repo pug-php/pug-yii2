@@ -21,24 +21,32 @@ use yii\helpers\FileHelper;
 class ViewRenderer extends YiiViewRenderer
 {
     /**
-     * @var string|false the directory or path alias pointing to where Pug cache will be stored. Set to false to
-     *                   disable templates cache.
+     * Directory or path alias pointing to where Pug cache will be stored. Set to `false` to
+     * disable templates cache.
+     *
+     * @var string|false
      */
     public $cachePath = '@runtime/pug/cache';
 
     /**
-     * @var string the directory or path alias pointing to where Pug templates are located.
+     * Directory or path alias pointing to where Pug templates are located.
+     *
+     * @var string
      */
     public $viewPath = '@app/views';
 
     /**
-     * @var string|null variable name for system data like $app and $view, let null to get those data as locals
-     *                  without namespace.
+     * Variable name for system data like `$app` and `$view`, let null to get those data as locals
+     * without namespace.
+     *
+     * @var string|null
      */
     public $systemVariable = null;
 
     /**
-     * @var array Pug options.
+     * Pug options.
+     *
+     * @var array
      *
      * @see https://www.phug-lang.com/#options
      */
@@ -49,21 +57,27 @@ class ViewRenderer extends YiiViewRenderer
     ];
 
     /**
-     * @var array Custom filters.
-     *            Keys of the array are names to call in template, values are names of functions or static methods
-     *            of some class.
-     *            Example: `['rot13' => 'str_rot13', 'jsonEncode' => '\yii\helpers\Json::encode']`.
-     *            In the template you can use it like this: `{{ 'test'|rot13 }}` or `{{ model|jsonEncode }}`.
+     * Custom filters.
+     * Keys of the array are names to call in template, values are names of functions or static methods
+     * of some class.
+     * Example: `['rot13' => 'str_rot13', 'jsonEncode' => '\yii\helpers\Json::encode']`.
+     * In the template you can use it like this: `{{ 'test'|rot13 }}` or `{{ model|jsonEncode }}`.
+     *
+     * @var array
      */
     public $filters = [];
 
     /**
-     * @var string pug renderer class name
+     * Pug renderer class name.
+     *
+     * @var string
      */
     public $renderer;
 
     /**
-     * @var Pug pug environment object that renders pug templates
+     * Pug engine object that renders pug templates
+     *
+     * @var Pug
      */
     public $pug;
 
