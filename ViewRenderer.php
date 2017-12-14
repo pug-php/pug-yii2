@@ -75,7 +75,7 @@ class ViewRenderer extends YiiViewRenderer
     public $renderer;
 
     /**
-     * Pug engine object that renders pug templates
+     * Pug engine object that renders pug templates.
      *
      * @var Pug
      */
