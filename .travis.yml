@@ -32,6 +32,12 @@ matrix:
       env: RENDERER='pug-php/pug:^3.0'
     - php: 7.2
       env: RENDERER='talesoft/tale-pug:^1.5'
+    - php: 7.3
+      env: RENDERER='pug-php/pug:^2.7'
+    - php: 7.3
+      env: RENDERER='pug-php/pug:^3.0'
+    - php: 7.3
+      env: RENDERER='talesoft/tale-pug:^1.5'
     - php: hhvm
       env: RENDERER='pug-php/pug:^2.7'
       dist: trusty
