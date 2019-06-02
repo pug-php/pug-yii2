@@ -38,14 +38,6 @@ matrix:
       env: RENDERER='pug-php/pug:^3.0'
     - php: 7.3
       env: RENDERER='talesoft/tale-pug:^1.5'
-    - php: hhvm
-      env: RENDERER='pug-php/pug:^2.7'
-      dist: trusty
-      sudo: required
-    - php: hhvm
-      env: RENDERER='pug-php/pug:^3.0'
-      dist: trusty
-      sudo: required
 
 sudo: false
 
