@@ -39,7 +39,7 @@
   "require-dev": {
     "yidas/yii2-composer-bower-skip": "^2.0.13",
     "yiisoft/yii2-bootstrap": "^2.0.10",
-    "phpunit/phpunit": "^4.8.35 || ^5.7 || ^8.5.15"
+    "phpunit/phpunit": "^8.5.15"
   },
   "autoload": {
     "psr-4": {
