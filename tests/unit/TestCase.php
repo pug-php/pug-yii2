@@ -19,8 +19,8 @@ $setUp = @new ReflectionMethod('PHPUnit\\Framework\\TestCase', 'setUp');
 $testCaseInitialization = true;
 
 require $setUp && method_exists($setUp, 'hasReturnType') && $setUp->hasReturnType()
-    ? __DIR__.'/TestCaseTyped.php'
-    : __DIR__.'/TestCaseUntyped.php';
+    ? __DIR__ . '/TestCaseTyped.php'
+    : __DIR__ . '/TestCaseUntyped.php';
 
 unset($testCaseInitialization);
 
