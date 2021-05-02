@@ -33,14 +33,13 @@
   },
   "require": {
     "php": ">=5.4.0",
-    "yiisoft/yii2": "^2.0",
-    "pug-php/pug": "^2.7 || ^3.0"
+    "yiisoft/yii2": "^2.0.13",
+    "pug-php/pug": "^2.7.6 || ^3.4.1"
   },
   "require-dev": {
-    "yidas/yii2-composer-bower-skip": "^2.0",
-    "yiisoft/yii2-bootstrap": "^2.0",
-    "phpunit/phpunit": ">=4.8.35 <6.0",
-    "codeclimate/php-test-reporter": ">=0.3"
+    "yidas/yii2-composer-bower-skip": "^2.0.13",
+    "yiisoft/yii2-bootstrap": "^2.0.10",
+    "phpunit/phpunit": "^8.5.15"
   },
   "autoload": {
     "psr-4": {

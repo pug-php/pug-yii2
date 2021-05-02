@@ -12,21 +12,25 @@
 
 namespace Pug\Yii\Tests;
 
+use ReflectionMethod;
 use yii\helpers\ArrayHelper;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+$setUp = @new ReflectionMethod('PHPUnit\\Framework\\TestCase', 'setUp');
+$testCaseInitialization = true;
+
+require $setUp && method_exists($setUp, 'hasReturnType') && $setUp->hasReturnType()
+    ? __DIR__ . '/TestCaseTyped.php'
+    : __DIR__ . '/TestCaseUntyped.php';
+
+unset($testCaseInitialization);
+
+class TestCase extends TestCaseTypeBase
 {
     public static $params;
 
-    protected function setUp()
+    protected function prepareTest()
     {
-        parent::setUp();
         $this->mockApplication();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**

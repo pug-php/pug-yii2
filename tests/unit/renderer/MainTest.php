@@ -16,10 +16,8 @@ use yii\helpers\FileHelper;
 
 class MainTest extends \Pug\Yii\Tests\TestCase
 {
-    public function tearDown()
+    public function finishTest()
     {
-        parent::tearDown();
-
         $cachePath = $this->getCachePath();
 
         FileHelper::removeDirectory($cachePath);
