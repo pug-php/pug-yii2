@@ -1,6 +1,6 @@
 <?php
 
-namespace Phug\Util;
+namespace Pug\Yii\Tests;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 

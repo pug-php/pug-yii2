@@ -13,9 +13,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         renderer: ['talesoft/tale-pug:^1.5', 'pug-php/pug:^2.7.6', 'pug-php/pug:^3.4.1']
         setup: ['lowest', 'stable']
+        include:
+          - php: 5.4
+            renderer: pug-php/pug:^2.7.6
+            setup: lowest
+          - php: 5.4
+            renderer: pug-php/pug:^2.7.6
+            setup: stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.renderer }} - ${{ matrix.setup }}
 
